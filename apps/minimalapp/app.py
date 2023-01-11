@@ -1,6 +1,5 @@
 import logging
 
-import config
 from email_validator import EmailNotValidError, validate_email
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_debugtoolbar import DebugToolbarExtension
