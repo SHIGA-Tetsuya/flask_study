@@ -1,5 +1,6 @@
 import logging
-import os
+
+import config
 from email_validator import EmailNotValidError, validate_email
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_debugtoolbar import DebugToolbarExtension
@@ -8,12 +9,21 @@ from flask_mail import Mail, Message
 app = Flask(__name__)
 
 # email
-app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
-app.config["MAIL_PORT"] = os.environ.get("MAIL_PORT")
-app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS")
-app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+# app.config.from_object("config")
+# app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
+# app.config["MAIL_PORT"] = os.environ.get("MAIL_PORT")
+# app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS")
+# app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+# app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+# app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "luckyjapon@gmail.com"
+app.config["MAIL_PASSWORD"] = "adggviuvfdxxcqgq"
+# 送信者名
+app.config["MAIL_DEFAULT_SENDER"] = "luckyjapon@gmail.com"
+
 mail = Mail(app)
 # csrf
 app.config["SECRET_KEY"] = "2AZSMss3p5QPbcY2hBsJ"
@@ -82,6 +92,13 @@ def contact_complete():
         )
         return redirect(url_for("contact_complete"))
     return render_template("contact_complete.html")
+
+
+def send_email(to, subject, template, **kwargs):
+    msg = Message(subject, recipients=[to])
+    msg.body = render_template(template + ".txt", **kwargs)
+    msg.html = render_template(template + ".html", **kwargs)
+    mail.send(msg)
 
 
 with app.test_request_context():
