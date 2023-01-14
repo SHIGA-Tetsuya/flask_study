@@ -4,4 +4,4 @@ MAIL_PORT = 587
 MAIL_USE_TLS = True
 MAIL_USERNAME = "luckyjapon@gmail.com"
 MAIL_PASSWORD = "adggviuvfdxxcqgq"
-MAIL_DEFAULT_SENDER = "luckyjapon@gamil.com"
+MAIL_DEFAULT_SENDER = "Flaskbook office"
