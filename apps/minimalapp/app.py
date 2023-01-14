@@ -1,28 +1,25 @@
 import logging
 
 from email_validator import EmailNotValidError, validate_email
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import (
+    Flask,
+    flash,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_mail import Mail, Message
+
+import apps.minimalapp.config as config
 
 app = Flask(__name__)
 
 # email
-# app.config.from_object("config")
-# app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
-# app.config["MAIL_PORT"] = os.environ.get("MAIL_PORT")
-# app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS")
-# app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-# app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-# app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "luckyjapon@gmail.com"
-app.config["MAIL_PASSWORD"] = "adggviuvfdxxcqgq"
-# 送信者名
-app.config["MAIL_DEFAULT_SENDER"] = "luckyjapon@gmail.com"
-
+app.config.from_object(config)
 mail = Mail(app)
 # csrf
 app.config["SECRET_KEY"] = "2AZSMss3p5QPbcY2hBsJ"
@@ -49,7 +46,13 @@ def show_name(name):
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    response = make_response(render_template("contact.html"))
+
+    response.set_cookie("flaskbook key", "flaskbook value")
+
+    session["username"] = "ichiro"
+
+    return response
 
 
 @app.route("/contact/complete", methods=["GET", "POST"])
