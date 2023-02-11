@@ -7,6 +7,44 @@ class BaseConfig:
     SECRET_KEY = "2AZSMss3p5QPbcY2hBsJ"
     WTF_CSRF_SECRET_KEY = "AuwzyszU5sugKN7KZs6f"
     UPLOAD_FOLDER = str(Path(basedir, "apps", "images"))
+    LABELS = [
+        "unlabeled",
+        "person",
+        "bicycle",
+        "car",
+        "motorcycle",
+        "airplane",
+        "bus",
+        "train",
+        "truck",
+        "boat",
+        "traffic light",
+        "fire hydrant",
+        "street sign",
+        "stop sign",
+        "parking meter",
+        "bench",
+        "bird",
+        "cat",
+        "dog",
+        "horse",
+        "sheep",
+        "cow",
+        "elephant",
+        "bear",
+        "zebra",
+        "giraffe",
+        "hat",
+        "backpack",
+        "umbrella",
+        "shoe",
+        "eye glasses",
+        "handbag",
+        "tie",
+        "suitcase",
+        "frisbee",
+        "skis",
+    ]
 
 
 class LocalConfig(BaseConfig):
