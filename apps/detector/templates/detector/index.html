@@ -1,10 +1,10 @@
 {% extends "detector/base.html" %}
 {% block content %}
 {% with messages = get_flashed_messages() %}
-{% if messegs %}
+{% if messages %}
 <ul>
     {% for message in messages %}
-    <li class="flash"> {{ message }}</li>
+    <li class="flash">{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
